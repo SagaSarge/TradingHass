@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# C extensions
+*.c
+
+# Virtual environment directories
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+*.out
+*.err
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Secrets and sensitive files
+*.env
+.env.*
+
+# Data files
+*.sqlite3
+*.db
+*.h5
+*.csv
+*.parquet
+*.feather
+*.json
+*.yaml
+
+# Dependency directories
+node_modules/
+__pycache__/
