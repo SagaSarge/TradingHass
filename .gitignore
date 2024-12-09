@@ -15,13 +15,19 @@ ENV/
 env.bak/
 venv.bak/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
-
-# Logs
+# Logs and temporary files
 *.log
 *.out
 *.err
+*.tmp
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+.Trashes
+.AppleDouble
+._*
 
 # IDE-specific files
 .vscode/
@@ -29,13 +35,18 @@ venv.bak/
 *.sublime-project
 *.sublime-workspace
 
-# OS-specific files
-.DS_Store
-Thumbs.db
+# Dependency directories
+node_modules/
+__pycache__/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
 
 # Secrets and sensitive files
 *.env
 .env.*
+config.json
+*.pem
 
 # Data files
 *.sqlite3
@@ -47,6 +58,8 @@ Thumbs.db
 *.json
 *.yaml
 
-# Dependency directories
-node_modules/
-__pycache__/
+# Build directories
+build/
+dist/
+*.egg-info/
+.eggs/
