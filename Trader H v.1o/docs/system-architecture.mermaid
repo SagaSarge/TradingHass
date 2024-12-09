@@ -1,0 +1,31 @@
+flowchart TB
+    subgraph Data Ingestion
+        N[News API] --> KP[Kafka Producer]
+        M[Market Data] --> KP
+        O[Options Flow] --> KP
+        KP --> KB[Kafka Broker]
+    end
+
+    subgraph Processing Layer
+        KB --> SA[Sentiment Analysis Agent]
+        KB --> OA[Options Analysis Agent]
+        KB --> TA[Technical Analysis Agent]
+        SA & OA & TA --> SB[Signal Broker]
+    end
+
+    subgraph Risk Management
+        SB --> RM[Risk Manager]
+        RM --> PE[Position Engine]
+        PE --> KS[Kill Switch]
+    end
+
+    subgraph Execution
+        PE --> EE[Execution Engine]
+        EE --> IB[Interactive Brokers]
+    end
+
+    subgraph Monitoring
+        EE & PE & RM --> MT[Metrics Transport]
+        MT --> DB[(Time Series DB)]
+        DB --> DA[Dashboard]
+    end
