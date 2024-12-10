@@ -1,112 +1,180 @@
-
+Here’s the full **README.md** file with the updated enhancements, formatted for clarity and engagement:
 
 ---
 
 # **HASS Trading System v1.0** 🚀
 
 ## **Overview** 📊
-The HASS Trading System is an advanced, multi-agent trading platform designed to optimize options trading strategies through real-time analysis, pattern recognition, and actionable insights. By leveraging cutting-edge AI tools, financial data APIs, and a modular multi-agent architecture, the system dynamically adapts to changing market conditions to deliver high-performing, risk-managed strategies.
+The HASS Trading System is an advanced, multi-agent platform designed to optimize options trading strategies by leveraging cutting-edge technologies in artificial intelligence, real-time data analysis, and adaptive risk management. The system integrates bias-aware sentiment analysis, graph-based pattern recognition, and insider trading monitoring to make informed, profitable decisions.
 
 ---
 
-## **Core Features** 🌟
+## **Key Features** 🌟
+
 ### **1. Multi-Agent Architecture** 🤖
-The HASS Trading System uses a distributed, modular architecture with specialized agents:
-- **Media Analysis Agent** 📰: Analyzes real-time news, social media, and sentiment data to detect actionable insights.
-- **Market Data Agent** 📈: Aggregates data from APIs (e.g., Polygon.io, Yahoo Finance) and tracks key metrics, such as stock price movements, options chains, and volume.
-- **Pattern Recognition Agent** 🔍: Identifies trading patterns and signals using machine learning models and historical data.
-- **Risk Management Agent** ⚖️: Dynamically adjusts position sizing, sets stop-losses, and monitors risk exposure.
-- **Execution Agent** 💹: Ensures timely execution of trades with minimal slippage through API integrations with brokers.
+The system comprises specialized agents for modular, scalable operation:
+- **Media Analysis Agent** 📰: Analyzes real-time news and sentiment with bias detection.
+- **Market Data Agent** 📈: Aggregates and processes real-time financial data.
+- **Pattern Recognition Agent** 🔍: Identifies trends, relationships, and anomalies in data.
+- **Risk Management Agent** ⚖️: Dynamically adjusts trading strategies based on risk factors.
+- **Execution Agent** 💹: Ensures timely and efficient trade execution.
+
+### **2. Advanced Analytics** 📡
+- **Sentiment Analysis** 💭: Extracts public sentiment and adjusts for media biases.
+- **Pattern Recognition** 📊: Discovers deep connections and recurring trading patterns.
+- **Backtesting and Optimization** 🧪: Validates strategies using historical data.
+
+### **3. Real-Time Integration** 🌐
+- Leverages APIs like **Polygon.io**, **Yahoo Finance**, **Google News**, and **OpenSecrets.org**.
+- Supports streaming data ingestion and event-driven communication using **Kafka** and **gRPC**.
+
+### **4. Risk Management** 🛡️
+- Tracks insider trades and political donations to assess potential conflicts.
+- Implements dynamic position sizing and stop-loss mechanisms.
 
 ---
 
-### **2. Communication Framework** 🛠️
-The system utilizes a robust communication framework to ensure efficient inter-agent communication:
-- **Publish-Subscribe Model** 📬: Real-time event-driven communication using Redis or RabbitMQ.
-- **Standardized Protocols** 📦: JSON or Protobuf-based messaging.
-- **Error Recovery** 🔄: Heartbeat and retry mechanisms for failure detection and recovery.
-- **Streaming Platforms** 🔗: Apache Kafka handles high-throughput message broadcasting.
+## **System Enhancements** 🚀
+
+### **1. Bias-Aware Sentiment Analysis** 📰
+**Objective**: Analyze media sentiment with adjustments for ownership and bias.
+- Cross-references sentiment scores with media ownership data.
+- Adjusts for political leaning to provide unbiased insights.
+
+**Example**:
+```python
+from transformers import pipeline
+import pandas as pd
+
+ownership_data = pd.DataFrame({
+    "Media Outlet": ["Outlet A", "Outlet B"],
+    "Parent Company": ["Company X", "Company Y"],
+    "Political Leaning": ["Conservative", "Liberal"]
+})
+
+sentiment_pipeline = pipeline("sentiment-analysis")
+
+def adjust_for_bias(news, outlet):
+    sentiment = sentiment_pipeline(news)[0]['label']
+    bias = ownership_data[ownership_data["Media Outlet"] == outlet]["Political Leaning"].values[0]
+    if bias == "Conservative" and sentiment == "POSITIVE":
+        return "BIASED_POSITIVE"
+    elif bias == "Liberal" and sentiment == "NEGATIVE":
+        return "BIASED_NEGATIVE"
+    return sentiment
+```
 
 ---
 
-### **3. Analytical Capabilities** 📡
-#### **a. Sentiment Analysis** 💭
-- Extracts public sentiment from social media platforms (e.g., Twitter, Reddit) and financial news.
-- Identifies sentiment spikes or anomalies and correlates them with stock price movements.
+### **2. Graph-Based Corporate Connections** 🔗
+**Objective**: Map multi-layered corporate and personal connections up to 6 degrees.
+- Uses Neo4j to analyze relationships and detect anomalies.
 
-#### **b. Pattern Recognition** 📊
-- Uses machine learning models (e.g., Random Forest, XGBoost) to identify recurring patterns in stock price, volume, and volatility.
-- Detects deeper, second- and third-layer relationships, such as:
-  - Company suppliers and competitors.
-  - Sectoral and macroeconomic impacts.
+**Example**:
+```python
+from py2neo import Graph, Node, Relationship
 
-#### **c. Backtesting and Optimization** 🧪
-- Runs backtests against historical data to validate trading strategies.
-- Optimizes parameters through reinforcement learning (e.g., risk-reward trade-offs for options spreads).
+graph = Graph("bolt://localhost:7687", auth=("neo4j", "password"))
+
+company_a = Node("Company", name="Company A")
+exec_b = Node("Person", name="Executive B")
+graph.create(Relationship(exec_b, "AFFILIATED_WITH", company_a))
+
+query = """
+MATCH (p:Person)-[:AFFILIATED_WITH*..6]-(c:Company)
+WHERE c.name = 'Company A'
+RETURN p, c
+"""
+results = graph.run(query)
+for record in results:
+    print(record)
+```
 
 ---
 
-### **4. Comprehensive Data Integration** 🌐
-#### **Sources** 📡
-- **Polygon.io**: Historical and real-time data, options chains, and market metrics.
-- **Yahoo Finance API**: Earnings reports, key metrics, and company fundamentals.
-- **Google News API**: Tracks top financial news articles.
-- **Social Media**: Sentiment from Twitter, Reddit, and other platforms.
-- **Macro Trends**: Economic indicators like inflation, GDP, and central bank actions.
+### **3. Insider Trade and Political Donation Monitoring** 💼
+**Objective**: Monitor insider trades and cross-reference with political affiliations.
+- Tracks trades via SEC filings.
+- Links insider trading patterns with political donations using OpenSecrets.org.
+
+**Example**:
+```python
+import requests
+
+# Fetch Insider Trades
+sec_url = "https://www.sec.gov/edgar/searchedgar/companysearch.html"
+params = {"CIK": "0000320193", "type": "4"}
+response = requests.get(sec_url, params=params)
+print(response.text)  # Parse for trades
+
+# Fetch Political Contributions
+contributions_url = "https://www.opensecrets.org/api/"
+params = {"apikey": "your_api_key", "method": "candContrib", "cid": "N00007360"}
+response = requests.get(contributions_url, params=params)
+contributions = response.json()
+print(contributions)
+```
 
 ---
 
-### **5. Options Trading Strategy** 💼
-The system supports advanced options strategies, such as:
-- **Bullish Call Spreads** 📈: For upward momentum with limited risk.
-- **Long Straddles** 🔄: For high implied volatility setups.
-- **Calendar Spreads** 🕒: To capitalize on time decay differences.
+### **4. Enhanced Communication Framework** 📡
+**Objective**: Improve agent interactions for scalability and reliability.
+- **Kafka Messaging**: Event-driven message broadcasting.
+- **gRPC APIs**: High-speed, reliable inter-agent communication.
 
-Each trade is informed by:
-- Sentiment analysis 💬.
-- Pattern recognition 🔍.
-- Real-time market data 📡.
+**Example**:
+```python
+from kafka import KafkaProducer, KafkaConsumer
+
+# Producer
+producer = KafkaProducer(bootstrap_servers='localhost:9092')
+producer.send('trading-signals', b'New trade signal detected')
+
+# Consumer
+consumer = KafkaConsumer('trading-signals', bootstrap_servers='localhost:9092')
+for message in consumer:
+    print(f"Received: {message.value.decode()}")
+```
 
 ---
 
 ## **How It Works** ⚙️
+
 ### **1. Data Ingestion** 🌐
-- Collects data from APIs, news aggregators, and social platforms.
-- Pre-processes data and stores it in a database or queues (e.g., Redis).
+- Collects data from APIs (e.g., Polygon.io, Yahoo Finance) and real-time news streams.
+- Stores data in queues or databases for efficient processing.
 
 ### **2. Multi-Agent Coordination** 🤖
-- The **Coordinator Agent** allocates tasks to specialized agents.
-- Agents communicate through a message bus, ensuring low-latency interactions.
+- **Coordinator Agent** ensures agents work harmoniously.
+- Agents communicate using Kafka or gRPC protocols.
 
-### **3. Analysis and Decision-Making** 🧠
-- **Media Analysis Agent** generates insights on sentiment and news.
-- **Pattern Recognition Agent** validates historical correlations and detects opportunities.
-- **Risk Management Agent** ensures trades adhere to defined risk parameters.
+### **3. Analysis and Execution** 🧠💵
+- **Media Analysis Agent** flags sentiment and bias.
+- **Pattern Recognition Agent** identifies market opportunities.
+- **Execution Agent** places trades via broker APIs.
 
-### **4. Trade Execution** 💵
-- The **Execution Agent** routes trades via broker APIs.
-- Real-time monitoring ensures minimal slippage and tracks live performance.
+### **4. Risk Management** 🛡️
+- Continuously evaluates trade risks based on market, sentiment, and insider trading data.
 
 ---
 
-## **Setup Instructions** 🛠️
-### **Prerequisites** 📋
-1. Python 3.9 or later 🐍.
-2. APIs:
-   - **Polygon.io** API key 🔑.
-   - **Yahoo Finance API** key 🔑.
-   - **Google News API** key 🔑.
+## **Installation and Setup** 🛠️
 
-### **Installation** 💻
+### **1. Prerequisites** 📋
+- Python 3.9 or later.
+- Access to APIs: Polygon.io, Yahoo Finance, Google News, OpenSecrets.org.
+- Neo4j and Kafka installations.
+
+### **2. Installation Steps** 💻
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-repo/hass-trading-system.git
    ```
-2. Navigate to the project folder:
+2. Navigate to the project directory:
    ```bash
    cd hass-trading-system
    ```
-3. Set up the virtual environment:
+3. Create a virtual environment:
    ```bash
    python3 -m venv venv
    source venv/bin/activate
@@ -116,32 +184,24 @@ Each trade is informed by:
    pip install -r requirements.txt
    ```
 
-### **Run the System** 🚀
+### **3. Running the System** 🚀
 1. Start the core trading system:
    ```bash
    python core/trading-system-core.py
    ```
-
-2. Ensure all agents are operational:
-   - Media Analysis Agent 📰.
-   - Market Data Agent 📈.
-   - Risk Management Agent ⚖️.
-   - Execution Agent 💵.
-
-3. Monitor logs for real-time insights 📊.
+2. Verify agent functionality:
+   - Media Analysis Agent 📰
+   - Pattern Recognition Agent 🔍
+   - Risk Management Agent ⚖️
+3. Monitor logs for real-time performance updates.
 
 ---
 
 ## **Future Enhancements** 🌟
-1. **Advanced AI Integration** 🧠:
-   - Incorporate GPT-based models for sentiment and trend prediction.
-2. **Dynamic Risk Modeling** ⚖️:
-   - Use reinforcement learning for adaptive position sizing.
-3. **Expanding Data Sources** 🌍:
-   - Include additional APIs and real-time macroeconomic feeds.
-4. **Visual Analytics** 📈:
-   - Build dashboards for live monitoring and historical trade analysis.
+1. Expand global data sources for diverse insights.
+2. Automate backtesting and optimization pipelines.
+3. Introduce dashboards for live monitoring and visualization.
 
 ---
 
-This README now includes emojis to make the content more engaging and visually appealing while maintaining clarity and detail. Let me know if you'd like further refinements! 😊
+This README serves as a comprehensive guide to the **HASS Trading System**, detailing its features, architecture, and enhancements for an optimized trading experience. 🚀✨
