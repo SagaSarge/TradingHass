@@ -1,65 +1,58 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+# Virtual environment
+venv/
+*.pyc
 *.pyo
 *.pyd
-*.so
-
-# C extensions
-*.c
-
-# Virtual environment directories
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Logs and temporary files
+__pycache__/
 *.log
-*.out
-*.err
-*.tmp
+
+# Environment files
+.env
+.env.*
+
+# Data and logs
+/data/
+*.csv
+*.json
+*.sqlite3
+
+# Redis dump files
+dump.rdb
+appendonly.aof
+
+# Python cache
+*.egg-info/
+.eggs/
 *.swp
+*.swo
 
-# OS-specific files
-.DS_Store
-Thumbs.db
-.Trashes
-.AppleDouble
-._*
-
-# IDE-specific files
+# IDE and Editor settings
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
-# Dependency directories
-node_modules/
-__pycache__/
+# Operating system files
+.DS_Store
+Thumbs.db
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+# Deployment and build files
+*.bak
+*.tmp
+*.out
+*.lock
+*.pid
+*.tar.gz
 
-# Secrets and sensitive files
+# Docker (if applicable)
+docker-compose.override.yml
 *.env
-.env.*
-config.json
-*.pem
 
-# Data files
-*.sqlite3
-*.db
-*.h5
-*.csv
-*.parquet
-*.feather
-*.json
-*.yaml
+# Node.js (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
 
-# Build directories
-build/
-dist/
-*.egg-info/
-.eggs/
+# Other temporary files
+*.log
+*.test
