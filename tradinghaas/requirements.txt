@@ -1,0 +1,6 @@
+python-dotenv==1.0.0     # Securely load .env variables
+redis==5.0.0             # Communication layer for inter-agent messaging
+requests==2.31.0         # Fetch data from APIs (e.g., Polygon.io)
+pandas==2.1.2            # Data manipulation and processing
+schedule==1.2.0          # Task scheduling for periodic data fetching
+numpy==1.24.3            # Numerical operations and calculations
